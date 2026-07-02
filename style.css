@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle, #120621 0%, #05010a 100%);
+    color: #e9d5ff;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+}
+
+.synth-container {
+    width: 100%;
+    max-width: 980px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    padding: 25px;
+    border-radius: 28px;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+/* Panel de Login/Registro */
+.auth-box {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px dashed rgba(6, 182, 212, 0.4);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+.auth-box h3 { color: #22d3ee; font-size: 1rem; letter-spacing: 0.5px; }
+.auth-note { font-size: 0.8rem; color: #a78bfa; margin-bottom: 5px; }
+.auth-inputs { display: flex; gap: 10px; width: 100%; max-width: 500px; }
+.auth-inputs input {
+    flex: 1;
+    background: #110724;
+    border: 1px solid #7c3aed;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+    font-size: 0.85rem;
+}
+.auth-buttons { display: flex; gap: 10px; }
+button { padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.8rem; transition: 0.2s; }
+.btn-cyan { background: #06b6d4; color: #000; }
+.btn-purple { background: #7c3aed; color: #fff; }
+.btn-danger { background: #ef4444; color: #fff; }
+
+.hidden { display: none !important; }
+
+h1 { margin-bottom: 3px; font-weight: 400; letter-spacing: 1px; color: #f3e8ff; font-size: 1.6rem; }
+.subtitle { font-size: 0.8rem; color: #a855f7; margin-bottom: 20px; }
+
+.controls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.osc-card {
+    background: rgba(0, 0, 0, 0.45);
+    padding: 15px;
+    border-radius: 14px;
+    border: 1px solid #7c3aed;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.card-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.noise-card { border-color: #ec4899; }
+.noise-card h3 { color: #f472b6; }
+.noise-vol-margin { margin-top: 15px; }
+
+.filter-section { margin-bottom: 20px; }
+.filter-card { background: rgba(0, 0, 0, 0.6); border: 1px solid #06b6d4; border-radius: 14px; padding: 15px 20px; text-align: left; }
+.filter-card h3 { color: #22d3ee; margin-bottom: 12px; }
+.filter-controls { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.filter-param { display: flex; flex-direction: column; gap: 5px; }
+.filter-param label { font-size: 0.8rem; color: #67e8f9; }
+.filter-param span { color: #fff; font-weight: bold; }
+.slider-param { flex-grow: 1; min-width: 200px; }
+
+select { background: #230b4d; color: white; border: 1px solid #a855f7; padding: 6px; border-radius: 6px; cursor: pointer; outline: none; font-size: 0.8rem; width: 100%; }
+.noise-card select { border-color: #ec4899; background: #4d0b33; }
+#filter-type { border-color: #06b6d4; background: #082f49; }
+
+.hz-control-group { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.hz-control-group input[type="number"] { background: #17072b; border: 2px solid #8b5cf6; color: #fff; font-size: 1.4rem; font-weight: bold; width: 100%; text-align: center; border-radius: 6px; }
+.unit { font-size: 0.9rem; color: #8b5cf6; font-weight: bold; }
+
+.vol-group { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; font-size: 0.75rem; color: #a78bfa; width: 100%; margin-top: 5px; }
+.noise-card .vol-group { color: #f472b6; }
+.vol-group span { color: #fff; }
+
+.freq-slider, #noise-volume, #filter-cutoff, #filter-q, .vol-group input[type="range"] { width: 100%; -webkit-appearance: none; background: #140526; height: 5px; border-radius: 5px; outline: none; }
+.freq-slider::-webkit-slider-thumb, .vol-group input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #d8b4fe; cursor: pointer; }
+#noise-volume::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #fbcfe8; cursor: pointer; }
+#filter-cutoff::-webkit-slider-thumb, #filter-q::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px; border-radius: 50%; background: #22d3ee; cursor: pointer; }
+
+/* Palancas de Encendido */
+.switch-container { position: relative; display: inline-block; width: 38px; height: 20px; }
+.switch-container input { opacity: 0; width: 0; height: 0; }
+.switch-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #2a1b40; border: 1px solid rgba(168, 85, 247, 0.4); transition: .2s; border-radius: 20px; }
+.switch-slider:before { position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; background-color: #a78bfa; transition: .2s; border-radius: 50%; }
+input:checked + .switch-slider { background-color: #7c3aed; border-color: #a855f7; }
+input:checked + .switch-slider:before { transform: translateX(18px); background-color: #fff; }
+.noise-card input:checked + .switch-slider { background-color: #ec4899; border-color: #f472b6; }
+
+.hint { font-size: 0.75rem; color: #a78bfa; margin-bottom: 15px; }
+
+/* El Piano */
+.piano { display: flex; justify-content: center; height: 170px; position: relative; margin: 0 auto; width: max-content; }
+.key { position: relative; border: 1px solid #000; cursor: pointer; }
+.white { width: 55px; height: 160px; background: #f3f4f6; border-radius: 0 0 5px 5px; z-index: 1; }
+.white:active, .white.active { background: #b886f8; box-shadow: inset 0 0 15px rgba(124, 58, 237, 0.6); }
+.black { width: 32px; height: 100px; background: #111; margin-left: -16px; margin-right: -16px; z-index: 2; border-radius: 0 0 3px 3px; }
+.black:active, .black.active { background: #ec4899; box-shadow: 0 0 12px #ec4899; }
+.master-info { margin-top: 15px; font-size: 0.65rem; opacity: 0.4; }

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintetizador Privado Supremo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="synth-container">
+        <div class="auth-box" id="auth-section">
+            <h3>Acceso al Sistema de Síntesis</h3>
+            <p class="auth-note">Ingresa tus credenciales para desbloquear la consola de audio</p>
+            <div class="auth-inputs">
+                <input type="email" id="auth-email" placeholder="Correo electrónico">
+                <input type="password" id="auth-password" placeholder="Contraseña">
+            </div>
+            <div class="auth-buttons">
+                <button id="btn-login" class="btn-cyan">Iniciar Sesión</button>
+                <button id="btn-register" class="btn-purple">Registrarse</button>
+            </div>
+        </div>
+
+        <div class="auth-box user-logged-box hidden" id="user-section">
+            <p>Sesión activa: <strong id="user-display"></strong></p>
+            <button id="btn-logout" class="btn-danger">Cerrar Sesión</button>
+        </div>
+
+        <div id="synth-content" class="hidden">
+            <h1>Sintetizador Incansable de Frecuencia Libre</h1>
+            <p class="subtitle">3 Osciladores Libres + Ruido + Filtro + Volúmenes e Interruptores independientes</p>
+            
+            <div class="controls-grid">
+                <div class="osc-card">
+                    <div class="card-header">
+                        <h3>Oscilador A</h3>
+                        <label class="switch-container">
+                            <input type="checkbox" id="muteA" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <select id="waveA">
+                        <option value="sine">Sinusoidal</option>
+                        <option value="square">Cuadrada</option>
+                        <option value="sawtooth">Diente de sierra</option>
+                        <option value="triangle">Triangular</option>
+                    </select>
+                    <div class="hz-control-group">
+                        <input type="number" id="hz-input-A" value="110">
+                        <span class="unit">Hz</span>
+                    </div>
+                    <input type="range" id="hz-slider-A" min="20" max="4000" value="110" class="freq-slider">
+                    <div class="vol-group">
+                        <label>Vol A: <span id="vol-text-A">50%</span></label>
+                        <input type="range" id="vol-slider-A" min="0" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="osc-card">
+                    <div class="card-header">
+                        <h3>Oscilador B</h3>
+                        <label class="switch-container">
+                            <input type="checkbox" id="muteB" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <select id="waveB">
+                        <option value="sine">Sinusoidal</option>
+                        <option value="square">Cuadrada</option>
+                        <option value="sawtooth" selected>Diente de sierra</option>
+                        <option value="triangle">Triangular</option>
+                    </select>
+                    <div class="hz-control-group">
+                        <input type="number" id="hz-input-B" value="220">
+                        <span class="unit">Hz</span>
+                    </div>
+                    <input type="range" id="hz-slider-B" min="20" max="4000" value="220" class="freq-slider">
+                    <div class="vol-group">
+                        <label>Vol B: <span id="vol-text-B">50%</span></label>
+                        <input type="range" id="vol-slider-B" min="0" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="osc-card">
+                    <div class="card-header">
+                        <h3>Oscilador C</h3>
+                        <label class="switch-container">
+                            <input type="checkbox" id="muteC" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <select id="waveC">
+                        <option value="sine" selected>Sinusoidal</option>
+                        <option value="square">Cuadrada</option>
+                        <option value="sawtooth">Diente de sierra</option>
+                        <option value="triangle">Triangular</option>
+                    </select>
+                    <div class="hz-control-group">
+                        <input type="number" id="hz-input-C" value="440">
+                        <span class="unit">Hz</span>
+                    </div>
+                    <input type="range" id="hz-slider-C" min="20" max="4000" value="440" class="freq-slider">
+                    <div class="vol-group">
+                        <label>Vol C: <span id="vol-text-C">50%</span></label>
+                        <input type="range" id="vol-slider-C" min="0" max="100" value="50">
+                    </div>
+                </div>
+
+                <div class="osc-card noise-card">
+                    <div class="card-header">
+                        <h3>Generador de Ruido</h3>
+                        <label class="switch-container">
+                            <input type="checkbox" id="muteNoise" checked>
+                            <span class="switch-slider"></span>
+                        </label>
+                    </div>
+                    <select id="noise-type">
+                        <option value="white">Ruido Blanco</option>
+                        <option value="pink">Ruido Rosa</option>
+                        <option value="brown">Ruido Marrón</option>
+                    </select>
+                    <div class="vol-group noise-vol-margin">
+                        <label>Vol Ruido: <span id="noise-vol-text">30%</span></label>
+                        <input type="range" id="noise-volume" min="0" max="100" value="30">
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-card">
+                    <h3>Módulo de Filtro Principal</h3>
+                    <div class="filter-controls">
+                        <div class="filter-param">
+                            <label>Tipo de Filtro</label>
+                            <select id="filter-type">
+                                <option value="lowpass">Lowpass (Paso Bajo)</option>
+                                <option value="highpass">Highpass (Paso Alto)</option>
+                                <option value="bandpass">Bandpass (Paso Banda)</option>
+                            </select>
+                        </div>
+                        <div class="filter-param slider-param">
+                            <label>Frecuencia de Corte: <span id="cutoff-text">2000 Hz</span></label>
+                            <input type="range" id="filter-cutoff" min="40" max="15000" value="2000" step="1">
+                        </div>
+                        <div class="filter-param slider-param">
+                            <label>Resonancia (Q): <span id="q-text">1</span></label>
+                            <input type="range" id="filter-q" min="1" max="25" value="1" step="0.5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="hint">Disparadores interactivos (Mouse o QWERTY): <strong>A, W, S, E, D, F, T, G, Y, H, U, J</strong></p>
+
+            <div id="piano" class="piano"></div>
+        </div>
+
+        <div class="master-info">
+            <span>Consola de Síntesis Protegida por Firebase Auth</span>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
