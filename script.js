@@ -28,13 +28,20 @@ let audioCtx = null;
 const activeNotes = new Map();
 let isAccessGranted = false; 
 
+// Estructura de triggers con asignación de notas musicales
 const triggers = [
-    { id: 'T1', type: 'white', key: 'a' }, { id: 'T2', type: 'black', key: 'w' },
-    { id: 'T3', type: 'white', key: 's' }, { id: 'T4', type: 'black', key: 'e' },
-    { id: 'T5', type: 'white', key: 'd' }, { id: 'T6', type: 'white', key: 'f' },
-    { id: 'T7', type: 'black', key: 't' }, { id: 'T8', type: 'white', key: 'g' },
-    { id: 'T9', type: 'black', key: 'y' }, { id: 'T10', type: 'white', key: 'h' },
-    { id: 'T11', type: 'black', key: 'u' }, { id: 'T12', type: 'white', key: 'j' }
+    { id: 'T1', type: 'white', key: 'a', note: 'C' }, 
+    { id: 'T2', type: 'black', key: 'w', note: 'C#' },
+    { id: 'T3', type: 'white', key: 's', note: 'D' }, 
+    { id: 'T4', type: 'black', key: 'e', note: 'D#' },
+    { id: 'T5', type: 'white', key: 'd', note: 'E' }, 
+    { id: 'T6', type: 'white', key: 'f', note: 'F' },
+    { id: 'T7', type: 'black', key: 't', note: 'F#' }, 
+    { id: 'T8', type: 'white', key: 'g', note: 'G' },
+    { id: 'T9', type: 'black', key: 'y', note: 'G#' }, 
+    { id: 'T10', type: 'white', key: 'h', note: 'A' },
+    { id: 'T11', type: 'black', key: 'u', note: 'A#' }, 
+    { id: 'T12', type: 'white', key: 'j', note: 'B' }
 ];
 
 // Nodos de control DOM (Captura General)
@@ -61,7 +68,7 @@ const userDisplay = document.getElementById('user-display');
 const btnLogin = document.getElementById('btn-login'); const btnRegister = document.getElementById('btn-register'); const btnLogout = document.getElementById('btn-logout');
 
 // =========================================================================
-// CONTROLADORES DE EVENTO DE SESIÓN (MODULARES FIJOS)
+// CONTROLADORES DE EVENTO DE SESIÓN
 // =========================================================================
 btnRegister.addEventListener('click', async () => {
     const email = authEmail.value.trim(); const password = authPassword.value;
@@ -122,13 +129,19 @@ function createNoiseBuffer(type) {
     return noiseBuffer;
 }
 
-// Renderizar las teclas asegurándonos de amarrar los eventos dinámicamente
+// Renderizar las teclas agregando la etiqueta visual encima de la tecla
 triggers.forEach(t => {
     const keyDiv = document.createElement('div'); 
     keyDiv.className = `key ${t.type}`; 
     keyDiv.dataset.trigger = t.id;
     
-    // Listeners del mouse explícitos
+    // Crear el texto de la nota musical
+    const noteSpan = document.createElement('span');
+    noteSpan.className = 'key-note';
+    noteSpan.textContent = t.note;
+    keyDiv.appendChild(noteSpan);
+    
+    // Listeners del mouse
     keyDiv.addEventListener('mousedown', () => startTrigger(t));
     keyDiv.addEventListener('mouseup', () => stopTrigger(t));
     keyDiv.addEventListener('mouseleave', () => stopTrigger(t));
@@ -139,7 +152,6 @@ function startTrigger(trigger) {
     if (!isAccessGranted) return; 
     if (activeNotes.has(trigger.id)) return;
     
-    // Inicialización segura del motor al interactuar
     if (!audioCtx) { 
         audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
     }
@@ -157,7 +169,6 @@ function startTrigger(trigger) {
     biquadFilter.frequency.setValueAtTime(parseFloat(filterCutoffSlider.value), audioCtx.currentTime);
     biquadFilter.Q.setValueAtTime(parseFloat(filterQSlider.value), audioCtx.currentTime);
 
-    // Ganancias de mezcla (0 a 1)
     gainNodeA.gain.value = (parseFloat(volA.value) / 100) * 0.12;
     gainNodeB.gain.value = (parseFloat(volB.value) / 100) * 0.12;
     gainNodeC.gain.value = (parseFloat(volC.value) / 100) * 0.12;
@@ -167,7 +178,6 @@ function startTrigger(trigger) {
     if (noiseBuffer) { noiseNode.buffer = noiseBuffer; noiseNode.loop = true; }
     noteGain.gain.setValueAtTime(1.0, audioCtx.currentTime);
 
-    // Sistema de conexión condicionado por interruptor (Switch)
     if (muteA.checked) { oscA.connect(gainNodeA); gainNodeA.connect(biquadFilter); }
     if (muteB.checked) { oscB.connect(gainNodeB); gainNodeB.connect(biquadFilter); }
     if (muteC.checked) { oscC.connect(gainNodeC); gainNodeC.connect(biquadFilter); }

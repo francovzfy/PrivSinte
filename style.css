@@ -121,13 +121,17 @@ input:checked + .switch-slider { background-color: #7c3aed; border-color: #a855f
 input:checked + .switch-slider:before { transform: translateX(18px); background-color: #fff; }
 .noise-card input:checked + .switch-slider { background-color: #ec4899; border-color: #f472b6; }
 
-.hint { font-size: 0.75rem; color: #a78bfa; margin-bottom: 15px; }
+/* El Piano y Notas Musicales */
+.piano { display: flex; justify-content: center; height: 170px; position: relative; margin: 25px auto 10px auto; width: max-content; }
+.key { position: relative; border: 1px solid #000; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; }
+.key-note { font-weight: bold; font-size: 0.85rem; pointer-events: none; }
 
-/* El Piano */
-.piano { display: flex; justify-content: center; height: 170px; position: relative; margin: 0 auto; width: max-content; }
-.key { position: relative; border: 1px solid #000; cursor: pointer; }
 .white { width: 55px; height: 160px; background: #f3f4f6; border-radius: 0 0 5px 5px; z-index: 1; }
+.white .key-note { color: #4b5563; }
 .white:active, .white.active { background: #b886f8; box-shadow: inset 0 0 15px rgba(124, 58, 237, 0.6); }
-.black { width: 32px; height: 100px; background: #111; margin-left: -16px; margin-right: -16px; z-index: 2; border-radius: 0 0 3px 3px; }
+.white:active .key-note, .white.active .key-note { color: #fff; }
+
+.black { width: 32px; height: 100px; background: #111; margin-left: -16px; margin-right: -16px; z-index: 2; border-radius: 0 0 3px 3px; padding-bottom: 8px; }
+.black .key-note { color: #9ca3af; font-size: 0.7rem; }
 .black:active, .black.active { background: #ec4899; box-shadow: 0 0 12px #ec4899; }
-.master-info { margin-top: 15px; font-size: 0.65rem; opacity: 0.4; }
+.black:active .key-note, .black.active .key-note { color: #fff; }
